@@ -3,7 +3,6 @@ package it.blog.progetto_blog.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.Strategy;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +24,7 @@ public class Author {
     private String name;
 
     @Column(name = "lastname", nullable = false)
-    private String username;
+    private String surname;
 
     private String email;
 
@@ -51,12 +50,12 @@ public class Author {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
