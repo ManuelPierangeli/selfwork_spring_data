@@ -16,7 +16,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     List<Author> findByNameAndSurname(String name, String surname);
 
     // query nativa
-    @Query(value = "SELECT * FROM authors a WHERE a.firstname = 'Manuel'",nativeQuery = true)
+    @Query(value = "SELECT * FROM authors a WHERE a.firstname = 'Manuel'", nativeQuery = true)
     List<Author> authorsWithSameName();
 
     // query non nativa
