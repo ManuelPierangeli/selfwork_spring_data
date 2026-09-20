@@ -3,6 +3,9 @@ package it.blog.progetto_blog.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +28,12 @@ public class Post {
     private String body;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = true)
+    @JsonIgnoreProperties("posts")
     private Author author;
 
     @OneToMany(mappedBy = "post")
+    @JsonIncludeProperties("post")
     private List<Comment> comments = new ArrayList<Comment>();
 
     public Post() {

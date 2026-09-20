@@ -60,7 +60,7 @@ class ProgettoBlogApplicationTests {
 	}
 
 	@Test 
-	void sameNameAuthourNonNative() {
+	void sameNameAuthurNonNative() {
 		assertThat(authorRepository.authorsWithSameNameNonNative())
 				.extracting("name")
 				.containsOnly("Manuel");
@@ -83,5 +83,5 @@ class ProgettoBlogApplicationTests {
 		postRepository.delete(p);
 
 	}
-	
+	 
 }
