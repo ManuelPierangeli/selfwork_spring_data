@@ -23,7 +23,7 @@ import it.blog.progetto_blog.repositories.AuthorRepository;
 public class AuthorController {
 
     @Autowired
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
     @GetMapping
     public List<Author> getAllAuthors() {
