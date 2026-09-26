@@ -2,19 +2,20 @@ package it.blog.progetto_blog.services;
 
 import java.util.List;
 
+import it.blog.progetto_blog.dtos.CommentDto;
 import it.blog.progetto_blog.models.Comment;
 
 public interface CommentService {
 
-    List<Comment> readAll();
+    List<CommentDto> readAll();
 
-    Comment read(Long id);
+    CommentDto read(Long id);
 
-    List<Comment> read(String body);
+    List<CommentDto> read(String body);
 
-    Comment create(Comment comment);
+    CommentDto create(Comment comment);
 
-    Comment update(Long id, Comment comment);
+    CommentDto update(Long id, Comment comment);
 
     void delete(Long id);
 }

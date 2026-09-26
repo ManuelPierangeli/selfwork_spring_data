@@ -1,12 +1,16 @@
 package it.blog.progetto_blog.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import it.blog.progetto_blog.dtos.PostDto;
 import it.blog.progetto_blog.models.Post;
 import it.blog.progetto_blog.repositories.PostRepository;
 
@@ -16,35 +20,43 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private ModelMapper mapper;
+
     @Override
-    public List<Post> readAll() {
-        return postRepository.findAll();
+    public List<PostDto> readAll() {
+        List<PostDto> dtos = new ArrayList<>();
+        for (Post post : postRepository.findAll()) {
+            dtos.add(mapper.map(post, PostDto.class));
+        }
+        return dtos;
+
     }
 
     @Override
-    public Post read(Long id) {
+    public PostDto read(Long id) {
         Optional<Post> optPost = postRepository.findById(id);
         if (optPost.isPresent()) {
-            return optPost.get();
+            return mapper.map(optPost.get(), PostDto.class);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post id= " + id + " not found.");
         }
     }
 
     @Override
-    public Post create(Post post) {
+    public PostDto create(Post post) {
         if (post.getTitle() == null || post.getTitle().isBlank())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        return postRepository.save(post);
+        return mapper.map(postRepository.save(post), PostDto.class);
     }
 
     @Override
-    public Post update(Long id, Post post) {
+    public PostDto update(Long id, Post post) {
         if (postRepository.existsById(id)) {
             post.setId(id);
-            return postRepository.save(post);
+            return mapper.map(postRepository.save(post), PostDto.class);
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post id= " + id + " not found.");
         }
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.blog.progetto_blog.dtos.PostDto;
 import it.blog.progetto_blog.models.Post;
 import it.blog.progetto_blog.services.PostService;
 
@@ -23,22 +24,22 @@ public class PostRestController {
     private PostService postService;
 
     @GetMapping
-    public List<Post> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return postService.readAll();
     }
 
     @GetMapping("/{id}")
-    public Post getPost(@PathVariable("id") Long id) {
+    public PostDto getPost(@PathVariable("id") Long id) {
         return postService.read(id);
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
+    public PostDto createPost(@RequestBody Post post) {
         return postService.create(post);
     }
 
     @PutMapping("/{id}")
-    public Post updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
+    public PostDto updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
         return postService.update(id, post);
     }
 

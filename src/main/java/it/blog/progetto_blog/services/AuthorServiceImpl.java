@@ -79,7 +79,7 @@ public class AuthorServiceImpl implements AuthorService {
             author.setId(id);
             return mapper.map(authorRepository.save(author), AuthorDto.class);
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Author id: " + id + " not found.");
         }
     }
 

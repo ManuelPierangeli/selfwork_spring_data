@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.blog.progetto_blog.dtos.CommentDto;
 import it.blog.progetto_blog.models.Comment;
 import it.blog.progetto_blog.services.CommentService;
 
@@ -22,22 +24,22 @@ public class CommentRestController {
     private CommentService commentService;
 
     @GetMapping
-    public List<Comment> getAllComments() {
+    public List<CommentDto> getAllComments() {
         return commentService.readAll();
     }
 
     @GetMapping("{id}")
-    public Comment getComment(@PathVariable("id") Long id) {
+    public CommentDto getComment(@PathVariable("id") Long id) {
         return commentService.read(id);
     }
 
     @PostMapping
-    public Comment createComment(@RequestBody Comment comment) {
+    public CommentDto createComment(@RequestBody Comment comment) {
         return commentService.create(comment);
     }
 
     @PutMapping
-    public Comment updateComment(@PathVariable("id") Long id, @RequestBody Comment comment) {
+    public CommentDto updateComment(@PathVariable("id") Long id, @RequestBody Comment comment) {
         return commentService.update(id, comment);
     }
 
