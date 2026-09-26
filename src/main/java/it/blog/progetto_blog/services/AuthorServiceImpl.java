@@ -1,5 +1,6 @@
 package it.blog.progetto_blog.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,50 +21,63 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @Autowired 
+    @Autowired
     private ModelMapper mapper;
 
     @Override
     public List<AuthorDto> readAll() {
-        List<AuthorDto> dtoAuthor = new Arraylist();
+        List<AuthorDto> dtos = new ArrayList<>();
+        for (Author author : authorRepository.findAll()) {
+            dtos.add(mapper.map(author, AuthorDto.class));
+        }
+        return dtos;
     }
 
     @Override
-    public Author read(Long id) {
+    public AuthorDto read(Long id) {
         Optional<Author> optAuthor = authorRepository.findById(id);
         if (optAuthor.isPresent()) {
-            return optAuthor.get();
+            return mapper.map(optAuthor.get(), AuthorDto.class);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Author id= " + id + " not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Author id: " + id + " not found.");
         }
     }
 
     @Override
-    public List<Author> read(String email) {
+    public List<AuthorDto> read(String email) {
         if (email == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        return authorRepository.findByEmail(email);
+        List<AuthorDto> dtos = new ArrayList<>();
+        for (Author author : authorRepository.findByEmail(email)) {
+            dtos.add(mapper.map(author, AuthorDto.class));
+        }
+        return dtos;
+
     }
 
     @Override
-    public List<Author> read(String name, String surname) {
+    public List<AuthorDto> read(String name, String surname) {
         if (name == null || surname == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        return authorRepository.findByNameAndSurname(name, surname);
+        List<AuthorDto> dtos = new ArrayList<>();
+        for (Author author : authorRepository.findByNameAndSurname(name, surname)) {
+            dtos.add(mapper.map(author, AuthorDto.class));
+        }
+        return dtos;
     }
 
     @Override
-    public Author create(Author author) {
+    public AuthorDto create(Author author) {
         if (author.getEmail() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        return authorRepository.save(author);
+        return mapper.map(authorRepository.save(author), AuthorDto.class);
     }
 
     @Override
-    public Author update(Long id, Author author) {
+    public AuthorDto update(Long id, Author author) {
         if (authorRepository.existsById(id)) {
             author.setId(id);
-            return authorRepository.save(author);
+            return mapper.map(authorRepository.save(author), AuthorDto.class);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
