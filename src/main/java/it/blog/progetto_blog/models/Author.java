@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "authors")
+@JsonPropertyOrder({ "id", "name", "surname", "email", "posts" })
 public class Author {
 
     @Id
