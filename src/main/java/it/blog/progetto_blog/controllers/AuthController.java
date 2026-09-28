@@ -1,0 +1,17 @@
+package it.blog.progetto_blog.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/")
+public class AuthController {
+    @GetMapping("login")
+    public String loginView(Model viewModel) {
+        viewModel.addAttribute("title", "Login");
+
+        return "login";
+    }
+}
